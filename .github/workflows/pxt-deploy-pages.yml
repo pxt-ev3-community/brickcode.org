@@ -64,6 +64,8 @@ jobs:
           mkdir -p built/packaged/docs/static
           if [ -d docs/static ]; then
             cp -R docs/static/. built/packaged/docs/static/
+            cd built/packaged/
+            ln -s docs/static static
           fi
 
       - name: Patch html json and manifest only
