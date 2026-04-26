@@ -83,6 +83,10 @@ jobs:
             ln -s docs/static static
           fi
 
+      - name: Copy additional static files
+        run: |
+          cp -R github-deploy/extra-files/* built/packaged/
+
       - name: Patch html json and manifest only
         run: |
           set -e
