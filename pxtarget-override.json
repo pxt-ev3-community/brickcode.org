@@ -12,7 +12,8 @@
         "githubPackages": true,
         "cloudProviders": {
             "github": {}
-        }
+        },
+        "apiRoot": "https://www.makecode.com/api/"
     },
     "appTheme": {
         "disableLiveTranslations": true,
