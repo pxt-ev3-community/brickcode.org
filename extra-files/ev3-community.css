@@ -1,0 +1,14 @@
+
+.ev3beta .cards .card.beta {
+    display: none;
+}
+
+.ev3beta header div.ui.logo.brand::after {
+    content: "pxt-ev3-community beta site";
+    font-size: 70%;
+}
+
+header div.ui.logo.brand::after {
+    content: "pxt-ev3-community";
+    font-size: 70%;
+}
