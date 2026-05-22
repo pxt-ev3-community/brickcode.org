@@ -58,9 +58,6 @@ jobs:
       - name: Install project dependencies
         run: npm install --ignore-scripts
 
-      - name: Pin legacy deps
-        run: npm install typescript@3.9.10 @types/ws@8.5.4 --no-save
-
       - name: Apply pxtarget.json overrides
         run: |
           mv pxtarget.json pxtarget-original.json
@@ -76,6 +73,9 @@ jobs:
             cp -R docs/static/. built/packaged/docs/static/
             cd built/packaged/
             ln -s docs/static static
+            mkdir -p blob/4800c370dcc589501253dbfe7027df3b9f3ca883/static
+            cd blob/4800c370dcc589501253dbfe7027df3b9f3ca883/static
+            ln -s ../../../docs/static/icons icons
           fi
 
       - name: Copy additional static files
