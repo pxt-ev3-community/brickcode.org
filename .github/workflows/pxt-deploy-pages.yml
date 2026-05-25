@@ -82,7 +82,7 @@ jobs:
           set -e
           PKG="built/packaged"
           find "$PKG" -type f \( -name '*.html' -o -name '*.json' -o -name '*.webmanifest' \) -print0 | while IFS= read -r -d '' f; do
-            sed -i 's#@cdnUrl@#/#g' "$f" || true
+            sed -i 's#@cdnUrl@##g' "$f" || true
           done
 
       - name: Debug packaged output
