@@ -2,6 +2,11 @@ name: pxt-deploy-pages
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '32 6 * * 1'
 
 permissions:
   contents: read
