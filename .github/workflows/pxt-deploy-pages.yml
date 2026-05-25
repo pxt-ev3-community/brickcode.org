@@ -59,45 +59,7 @@ jobs:
         run: npm install --ignore-scripts
 
       - name: Build static package
-        run: pxt staticpkg --locs-src translations
-
-      - name: Copy docs static assets into package
-        run: |
-          mkdir -p built/packaged/docs/static
-          if [ -d docs/static ]; then
-            cp -R docs/static/. built/packaged/docs/static/
-            cd built/packaged/
-            ln -s docs/static static
-            mkdir -p blob/4800c370dcc589501253dbfe7027df3b9f3ca883/static
-            cd blob/4800c370dcc589501253dbfe7027df3b9f3ca883/static
-            ln -s ../../../docs/static/icons icons
-          fi
-
-      - name: Copy additional static files
-        run: |
-          cp -R static-files/* built/packaged/
-
-      - name: Add custom .js and .css overrides
-        run: |
-          sed -i '/<\/head>/e cat static-files/ev3-community.html' built/packaged/index.html
-          sed -i '/<\/head>/e cat static-files/ev3-community.html' built/packaged/docs.html
-
-      - name: Patch html json and manifest only
-        run: |
-          set -e
-          PKG="built/packaged"
-          find "$PKG" -type f \( -name '*.html' -o -name '*.json' -o -name '*.webmanifest' \) -print0 | while IFS= read -r -d '' f; do
-            sed -i 's#@cdnUrl@##g' "$f" || true
-          done
-
-      - name: Debug packaged output
-        run: |
-          echo "=== remaining @cdnUrl@ in html/json/webmanifest ==="
-          find built/packaged -type f \( -name '*.html' -o -name '*.json' -o -name '*.webmanifest' \) -exec grep -nH '@cdnUrl@' {} \; || true
-          echo "=== docs/static files copied ==="
-          find built/packaged/docs/static -type f | sort | head -n 200 || true
-          echo "=== index.html references to docs/static ==="
-          grep -n 'docs/static' built/packaged/index.html || true
+        run: ./build_static_package.sh /
 
       - name: Verify package output exists
         run: |
