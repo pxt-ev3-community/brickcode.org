@@ -36,11 +36,6 @@ jobs:
           CLEAN_VERSION=$(echo "${{ steps.vars.outputs.tag }}" | sed 's/^v//')
           sed -i "s/\"version\": \".*\"/\"version\": \"$CLEAN_VERSION\"/" package.json
 
-      - name: Checkout deploy tools
-        uses: actions/checkout@v4
-        with:
-          path: github-deploy
-
       - name: Checkout translations
         uses: actions/checkout@v4
         with:
@@ -57,11 +52,6 @@ jobs:
 
       - name: Install project dependencies
         run: npm install --ignore-scripts
-
-      - name: Apply pxtarget.json overrides
-        run: |
-          mv pxtarget.json pxtarget-original.json
-          jq -s '.[0] * .[1]' pxtarget-original.json github-deploy/pxtarget-override.json > pxtarget.json
 
       - name: Build static package
         run: pxt staticpkg --locs-src translations
@@ -80,12 +70,12 @@ jobs:
 
       - name: Copy additional static files
         run: |
-          cp -R github-deploy/extra-files/* built/packaged/
+          cp -R static-files/* built/packaged/
 
       - name: Add custom .js and .css overrides
         run: |
-          sed -i '/<\/head>/e cat github-deploy/extra-files/ev3-community.html' built/packaged/index.html
-          sed -i '/<\/head>/e cat github-deploy/extra-files/ev3-community.html' built/packaged/docs.html
+          sed -i '/<\/head>/e cat static-files/ev3-community.html' built/packaged/index.html
+          sed -i '/<\/head>/e cat static-files/ev3-community.html' built/packaged/docs.html
 
       - name: Patch html json and manifest only
         run: |
